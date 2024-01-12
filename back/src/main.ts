@@ -1,8 +1,22 @@
-import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
+import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AppModule } from './app.module';
+import helmet from 'helmet';
 
-
-
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  app.enableCors(
+      { 'origin':'http://localhost:4200' }
+    );
+    
+  const config = new DocumentBuilder()
+  .setTitle('Gestion des Associations')
+  .setDescription('Descriptions des APIs de la gestion des associations')
+  .setVersion('1.0')
+  .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+  await app.listen(3000);
+  app.use(helmet());
+}
+bootstrap();
