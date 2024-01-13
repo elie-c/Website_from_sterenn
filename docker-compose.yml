@@ -5,7 +5,7 @@ services:
       - 80:80
     depends_on:
       - back
-    image: nginx
+    build: .
 
   database:
     image: postgres:latest
@@ -15,6 +15,8 @@ services:
       - POSTGRES_PASSWORD=esir
       - POSTGRES_DB=assoDeRennes
       - POSTGRES_USER=esir
+    volumes:
+      - database_data:/var/lib/postgresql/data
 
   back:
     depends_on:
@@ -25,5 +27,7 @@ services:
       - DB_PASSWORD=esir
       - DB_DATABASE=assoDeRennes
       - DB_PORT=5432
-    image: back
+    build: back/
 
+volumes:
+    database_data:
