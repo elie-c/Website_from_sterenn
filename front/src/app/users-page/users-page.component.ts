@@ -36,14 +36,14 @@ export class UsersPageComponent implements OnInit {
   message !: string;
   dataSource: User[]= [];
   ngOnInit(): void {
-    const userRequest: Observable<any> = this.http.get('http://localhost:3000/users', { observe: 'response' });
+    const userRequest: Observable<any> = this.http.get('/api/users', { observe: 'response' });
     lastValueFrom(userRequest).then(response => this.dataSource = response.body);
   }
 
   search(e: KeyboardEvent) {
     const searchTerm = (e.target as HTMLInputElement).value;
     if (searchTerm === "") {
-      const request: Observable<any> = this.http.get('http://localhost:3000/users/', {observe: 'response'});
+      const request: Observable<any> = this.http.get('/api/users/', {observe: 'response'});
       lastValueFrom(request).then(response => this.dataSource = response.body);
       this.message = "";
     } else if (e.key === 'Enter') {
@@ -51,7 +51,7 @@ export class UsersPageComponent implements OnInit {
       // Récupérer la valeur de la barre de recherche
       const searchTerm = (e.target as HTMLInputElement).value;
       this.dataSource = [];
-      const request: Observable<any> = this.http.get('http://localhost:3000/users/' + searchTerm, {observe: 'response'});
+      const request: Observable<any> = this.http.get('/api/users/' + searchTerm, {observe: 'response'});
       lastValueFrom(request).then(response => {
         //console.log("pas d'erreur");
         this.dataSource.push(response.body);

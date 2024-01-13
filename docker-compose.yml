@@ -1,0 +1,29 @@
+services:
+
+  nginx:
+    ports:
+      - 80:80
+    depends_on:
+      - back
+    image: nginx
+
+  database:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=esir
+      - POSTGRES_DB=assoDeRennes
+      - POSTGRES_USER=esir
+
+  back:
+    depends_on:
+      - database
+    environment:
+      - DB_HOST=database
+      - DB_USER=esir
+      - DB_PASSWORD=esir
+      - DB_DATABASE=assoDeRennes
+      - DB_PORT=5432
+    image: back
+

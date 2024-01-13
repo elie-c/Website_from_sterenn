@@ -22,7 +22,7 @@ export class AccountComponent implements OnInit {
   id !: number
   ngOnInit(): void {
     this.id = this.token.getUserId();
-    const request: Observable<any> = this.http.get('http://localhost:3000/users/' + this.id, { observe: 'response' });
+    const request: Observable<any> = this.http.get('/api/users/' + this.id, { observe: 'response' });
     lastValueFrom(request).then(response => this.user = response.body);
   }
   delete(): void {

@@ -68,7 +68,7 @@ export class ModificationMembresComponent implements OnInit {
                 console.log(JSON.stringify(this.membersModified));
               })
               .then(response => {
-                const userRequest: Observable<any> = this.http.get('http://localhost:3000/users', {observe: 'response'});
+                const userRequest: Observable<any> = this.http.get('/api/users', {observe: 'response'});
                 lastValueFrom(userRequest).then(response => this.users = response.body);
                 console.log("recuperation des utilisateurs");
               })

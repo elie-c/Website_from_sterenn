@@ -44,7 +44,7 @@ export class ModificationAssociationComponent implements OnInit{
         const id = res.get("id");
         if (id != null) {
           this.assocId = +id;
-          const userRequest: Observable<any> = this.http.get(`http://localhost:3000/associations/${this.assocId}`, { observe: 'response' });
+          const userRequest: Observable<any> = this.http.get(`/api/associations/${this.assocId}`, { observe: 'response' });
           lastValueFrom(userRequest).then( response => {
             this.association.patchValue(response.body);
           })

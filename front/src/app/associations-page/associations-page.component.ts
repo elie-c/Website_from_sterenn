@@ -35,7 +35,7 @@ export class AssociationsPageComponent implements OnInit {
   message !: string;
   dataSource: any= [];
   ngOnInit(): void {
-    const request: Observable<any> = this.http.get('http://localhost:3000/associations', {observe: 'response'});
+    const request: Observable<any> = this.http.get('/api/associations', {observe: 'response'});
     console.log(lastValueFrom(request));
     lastValueFrom(request).then(response => this.dataSource = response.body);
   }
@@ -43,7 +43,7 @@ export class AssociationsPageComponent implements OnInit {
   search(e: KeyboardEvent) {
     const searchTerm = (e.target as HTMLInputElement).value;
     if (searchTerm === "") {
-      const request: Observable<any> = this.http.get('http://localhost:3000/associations/', {observe: 'response'});
+      const request: Observable<any> = this.http.get('/api/associations/', {observe: 'response'});
       lastValueFrom(request).then(response => this.dataSource = response.body);
       this.message = "";
     } else if (e.key === 'Enter') {
@@ -51,7 +51,7 @@ export class AssociationsPageComponent implements OnInit {
       // Récupérer la valeur de la barre de recherche
       const searchTerm = (e.target as HTMLInputElement).value;
       this.dataSource = [];
-      const request: Observable<any> = this.http.get('http://localhost:3000/associations/' + searchTerm, {observe: 'response'});
+      const request: Observable<any> = this.http.get('/api/associations/' + searchTerm, {observe: 'response'});
       lastValueFrom(request).then(response => {
         this.dataSource.push(response.body);
         this.message = "";
