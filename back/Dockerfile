@@ -15,7 +15,7 @@ WORKDIR /app
 COPY . .
 
 RUN npm install -g @nestjs/cli
-RUN npm install
 RUN npm install pg --save
+RUN npm install
 EXPOSE 3000
 CMD [ "npm", "run","start:dev"]

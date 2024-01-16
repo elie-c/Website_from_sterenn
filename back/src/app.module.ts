@@ -27,19 +27,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
             entities: [User, Association, Role, Minute],
             synchronize: true,
         }),
-        ClientsModule.register([
-            {
-                name: 'RABBITMQ_SERVICE',
-                transport: Transport.RMQ,
-                options: {
-                    urls: ['amqp://esir:esir@localhost:5672'], // Remplacez avec vos propres informations de connexion RabbitMQ
-                    queue: 'mail',
-                    queueOptions: {
-                        durable: false,
-                    },
-                },
-            },
-        ]),
         UsersModule, AssociationsModule, AuthModule, RolesModule, MinutesModule],
     providers: [AppService],
 })

@@ -17,16 +17,6 @@ async function bootstrap() {
   .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
-    transport: Transport.RMQ,
-    options: {
-      urls: ['amqp://localhost:5672'],
-      queue: 'mail',
-      queueOptions: {
-        durable: false
-      },
-    },
-  });
   await app.listen(3000);
   app.use(helmet());
 }

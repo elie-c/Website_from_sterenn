@@ -8,6 +8,7 @@ services:
       - database
     build: 
         context: .
+        target: dev
 
   database:
     image: postgres:latest
@@ -30,10 +31,14 @@ services:
       - DB_DATABASE=assoDeRennes
       - DB_PORT=5432
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: back/
       target: dev
   
+  front:
+    build:
+      context: front/
+    volumes:
+      - front:/app
   mom:
     image: rabbitmq
     ports:
@@ -43,24 +48,10 @@ services:
       - RABBITMQ_DEFAULT_PASS=esir
       - RABBITMQ_NODE_PORT=5672
 
-  mail:
-    build : quarkus/
-    depends_on:
-      - mom
-    restart: always
-    environment:
-      - EMAIL_FROM=sterenn.lehir@gmail.com
-      - EMAIL_HOST=smtp
-      - EMAIL_PORT=1025
-      - RABBIT_HOST=mom
-      - RABBIT_PORT=5672
-      - RABBIT_USER=esir
-      - RABBIT_PWD=esir
-      - RABBIT_QUEUE=mail
-
   smtp:
     image: maildev/maildev:2.0.5
     restart: always
 
 volumes:
     database_data:
+    front:
