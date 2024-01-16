@@ -1,4 +1,4 @@
-FROM node:19
+FROM node:19 AS prod
 
 WORKDIR /app
 COPY . .
@@ -10,12 +10,12 @@ RUN npm run build
 EXPOSE 3000
 CMD [ "node", "dist/main.js" ]
 
-#FROM node:19 AS dev
-#WORKDIR /app
-#COPY . .
+FROM node:19 AS dev
+WORKDIR /app
+COPY . .
 
-#RUN npm install -g @nestjs/cli
-#RUN npm install
-#RUN npm install pg --save
-#EXPOSE 3000
-#CMD [ "npm", "run","start:dev"]
+RUN npm install -g @nestjs/cli
+RUN npm install
+RUN npm install pg --save
+EXPOSE 3000
+CMD [ "npm", "run","start:dev"]

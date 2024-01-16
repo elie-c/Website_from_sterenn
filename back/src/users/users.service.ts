@@ -1,8 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {HttpException, HttpStatus, Inject, Injectable} from '@nestjs/common';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Equal, ILike, Repository } from 'typeorm';
+import { Equal, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import {ClientProxy, RmqRecordBuilder} from "@nestjs/microservices";
 
 
 @Injectable()
@@ -10,7 +11,9 @@ export class UsersService {
     
     constructor(
         @InjectRepository(User)
-        private repository: Repository<User>
+        private repository: Repository<User>,
+        @Inject('MAIL_SERVICE')
+        private rabbitmq: ClientProxy,
     ) {}
 
     async getAll(): Promise<User[]> {
@@ -35,9 +38,16 @@ export class UsersService {
                 firstname: firstnameToCreate, 
                 age: ageToCreate,
                 password: hash,
-                email:emailToCreate
+                email: emailToCreate
             })
         this.repository.save(user);
+            // Notification de mail
+        const record = new RmqRecordBuilder(emailToCreate)
+            .setOptions({
+                contentType: 'application/json',
+            })
+            .build();
+        this.rabbitmq.emit('mail', record);
         return user;
         } else { // L'utilisateur existe déjà
             return undefined; 

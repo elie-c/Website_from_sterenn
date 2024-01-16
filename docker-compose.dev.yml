@@ -8,7 +8,6 @@ services:
       - database
     build: 
         context: .
-        target: prod
 
   database:
     image: postgres:latest
@@ -24,22 +23,18 @@ services:
   back:
     depends_on:
       - database
-      - rabbitmq
     environment:
       - DB_HOST=database
       - DB_USER=esir
       - DB_PASSWORD=esir
       - DB_DATABASE=assoDeRennes
       - DB_PORT=5432
-      - RABBITMQ_URL=amqp://esir:esir@mom:5672
-      - DEFAULT_USER_PASS=admin
-      - DEFAULT_USER_EMAIL=admin@administration.fr
     build:
-      context: back/
+      context: .
+      dockerfile: Dockerfile
+      target: dev
   
-  rabbitmq:
-    build:
-      context: rabbitmq/
+  mom:
     image: rabbitmq
     ports:
       - 5672:5672
@@ -48,21 +43,20 @@ services:
       - RABBITMQ_DEFAULT_PASS=esir
       - RABBITMQ_NODE_PORT=5672
 
-  quarkus:
+  mail:
     build : quarkus/
     depends_on:
-      - rabbitmq
+      - mom
     restart: always
     environment:
       - EMAIL_FROM=sterenn.lehir@gmail.com
       - EMAIL_HOST=smtp
-      - EMAIL_PORT=1080
-      - RABBITMQ_HOST=mom
-      - RABBITMQ_PORT=5672
-      - RABBITMQ_USER=esir
-      - RABBITMQ_PWD=esir
-      - RABBITMQ_QUEUE=mail
-      - QUARKUS_MAILER_HOST=smtp
+      - EMAIL_PORT=1025
+      - RABBIT_HOST=mom
+      - RABBIT_PORT=5672
+      - RABBIT_USER=esir
+      - RABBIT_PWD=esir
+      - RABBIT_QUEUE=mail
 
   smtp:
     image: maildev/maildev:2.0.5

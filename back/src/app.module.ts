@@ -11,9 +11,12 @@ import { RolesModule } from './roles/roles.module';
 import { Role } from './roles/role.entity';
 import { MinutesModule } from './minutes/minutes.module';
 import { Minute } from './minutes/minute.entity';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
+// @ts-ignore
 @Module({
-  imports: [
+    controllers: [AppController],
+    imports: [
         TypeOrmModule.forRoot({
             type: 'postgres',
             host: 'database',
@@ -24,8 +27,20 @@ import { Minute } from './minutes/minute.entity';
             entities: [User, Association, Role, Minute],
             synchronize: true,
         }),
+        ClientsModule.register([
+            {
+                name: 'RABBITMQ_SERVICE',
+                transport: Transport.RMQ,
+                options: {
+                    urls: ['amqp://esir:esir@localhost:5672'], // Remplacez avec vos propres informations de connexion RabbitMQ
+                    queue: 'mail',
+                    queueOptions: {
+                        durable: false,
+                    },
+                },
+            },
+        ]),
         UsersModule, AssociationsModule, AuthModule, RolesModule, MinutesModule],
-  controllers: [AppController],
-  providers: [AppService],
+    providers: [AppService],
 })
 export class AppModule {}
