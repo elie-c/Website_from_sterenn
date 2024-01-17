@@ -15,7 +15,7 @@ BDD
 
 ## Comment utiliser l'application
 1. Cloner ce projet Github sur votre machine personnelle
-2. Installer Docker : (https://docs.docker.com/get-docker/)
+2. Installer Docker : https://docs.docker.com/get-docker/
 3. Ouvrir le projet et executer la commande :
 ```
 docker compose up
