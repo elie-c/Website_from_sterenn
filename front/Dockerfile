@@ -1,8 +1,11 @@
 FROM node:18-alpine
-WORKDIR /app
+WORKDIR /usr/
+
 COPY package*.json ./
+COPY tsconfig*.json ./
+COPY angular.json ./
 RUN npm install
-COPY . .
-RUN npm run build
+
+COPY . ./
 EXPOSE 4200
-CMD ["npm", "start", "--host", "0.0.0.0"]
+CMD ["npm", "start"]

@@ -1,4 +1,12 @@
 services:
+    
+  front:
+    build:
+      context: front/
+    volumes: 
+      - ./front/src:/usr/src
+    ports:
+      - 4200:4200
 
   nginx:
     ports:
@@ -9,9 +17,6 @@ services:
     build: 
         context: .
         target: dev
-    command: sh -c "npm install && ng serve --host 0.0.0.0 --disable-host-check"
-    volumes: 
-      - front:/app/src:ro
 
   database:
     image: postgres:latest
