@@ -2,11 +2,11 @@
 
 ## Présentation du projet
 Le but de ce projet est la migration de notre application web NestJS/Angular vers une architecture type "micro-service", en utilisant la conteneurisation Docker.
-A l'origine, cette application permet, entre autres, la création, l'enregistrement, la recherche et la modification d'utilisateurs et d'associations (pour en savoir plus [cliquez ici](https://github.com/SterennLeHir/Website/blob/main/front/README.md)).
+A l'origine, cette application permet, entre autres, la création, l'enregistrement, la recherche et la modification d'utilisateurs et d'associations (pour en savoir plus cliquez [ici](https://github.com/SterennLeHir/Website/blob/main/front/README.md)).
 On souhaite pouvoir lui rajouter d'autres services.
 
 ## Schéma de l'architecture
-Vous trouverez ci-dessous un schéma de notre architecture.
+Vous trouverez ci-dessous un schéma de notre architecture "micro-service".
 
 ## Liste des services
 Serveur HTTP + Front
