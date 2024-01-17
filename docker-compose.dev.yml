@@ -9,6 +9,9 @@ services:
     build: 
         context: .
         target: dev
+    command: sh -c "npm install && ng serve --host 0.0.0.0 --disable-host-check"
+    volumes: 
+      - front:/app/src:ro
 
   database:
     image: postgres:latest
@@ -33,24 +36,6 @@ services:
     build:
       context: back/
       target: dev
-  
-  front:
-    build:
-      context: front/
-    volumes:
-      - front:/app
-  mom:
-    image: rabbitmq
-    ports:
-      - 5672:5672
-    environment:
-      - RABBITMQ_DEFAULT_USER=esir
-      - RABBITMQ_DEFAULT_PASS=esir
-      - RABBITMQ_NODE_PORT=5672
-
-  smtp:
-    image: maildev/maildev:2.0.5
-    restart: always
 
 volumes:
     database_data:
