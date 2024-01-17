@@ -22,5 +22,6 @@ docker compose up
 ```
 
 ## Sécurité
+Nous avons fait le choix de n'exposer que le serveur http Nginx sur Internet car il embarque par défaut le protocole https pour communiquer avec le navigateur, qui encrypte tous les échanges. Le reste de notre architecture échange en clair car nos serveurs se situent sur un réseau privé.
 
 ## Feedback sur le module Architecture Logicielle
