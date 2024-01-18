@@ -42,6 +42,8 @@ services:
     build:
       context: back/
       target: dev
+    volumes: 
+      - ./back/src:/app/src
 
 volumes:
     database_data:

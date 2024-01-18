@@ -11,8 +11,8 @@ EXPOSE 3000
 CMD [ "node", "dist/main.js" ]
 
 FROM node:19 AS dev
-WORKDIR /app
-COPY . .
+WORKDIR /app/
+COPY . ./
 
 RUN npm install -g @nestjs/cli
 RUN npm install pg --save
