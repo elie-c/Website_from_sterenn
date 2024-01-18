@@ -13,13 +13,16 @@ Vous trouverez ci-dessous un schéma de notre architecture "micro-service".
 
 Pour le mode de fonctionnement production, nos services Angular et Nginx sont fusionnés en un seul service car nous avons fait le choix de copier notre build du frontend Angular dans notre serveur Nginx. Ainsi on gagne en performances car on évite des requêtes inutiles entre le sesrveur Nginx et Angular.
 
-Pour le mode développement par contre, les deux services sont "distincts" car le serveur Nginx communique avec le serveur Angular qui lui est lancé en mode start:dev; permettant de mettre à jour notre application dès qu'on modifie notre frontend Angularr, sans devoir tout re déployer. Pour son implémetation on utilise un proxy-pass pour rediriger les requêtes au serveur Http Nginx à notre serveur Angular. Malheureusement cela n'est pas encore fonctionnel.
+Pour le mode développement par contre, les deux services sont "distincts" car le serveur Nginx communique avec le serveur Angular qui lui est lancé en mode ng serve --open; permettant de mettre à jour notre application dès qu'on modifie notre frontend Angular, sans devoir tout re déployer. Pour son implémetation on utilise le bind-mount un proxy-pass pour rediriger les requêtes au serveur Http Nginx à notre serveur Angular. Malheureusement cela n'est pas encore fonctionnel.
 
 * Back
-
-
+  
+En mode production, le service backend, codé en NestJS, communique avec le frontend et la base de donnée. On utilise la commande node dist/main.js
+En mode développement, on utilise la commande npm run start:dev pour que les modifications soient prises en compte en temps réel et rebuild automatiquement le serveur et donc l'application. On utilise dans ce cas aussi un bind-mount.
 
 * BDD
+
+La base de donnée, implémentée par Postgres, permet la persistance des données. Elle communique avec le backend. On sauvegarde les donnnées par l'utilisation d'un volume.
 
 ## Comment utiliser l'application
 1. Cloner ce projet Github sur votre machine personnelle
