@@ -7,7 +7,8 @@ On souhaite pouvoir lui rajouter d'autres services.
 
 ## Schéma de l'architecture
 Vous trouverez ci-dessous un schéma de notre architecture "micro-service".
-!(schema)[https://github.com/SterennLeHir/Website/blob/main/img/structure.png]
+
+![schema](https://github.com/SterennLeHir/Website/blob/main/img/structure.png)
 
 ![](images/structure.png)
 ## Liste des services
