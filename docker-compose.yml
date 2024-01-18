@@ -7,7 +7,8 @@ services:
       - back
       - database
     build: 
-        context: .
+      context: .
+      target: prod
 
   database:
     image: postgres:latest
@@ -35,6 +36,7 @@ services:
       - DEFAULT_USER_EMAIL=admin@administration.fr
     build:
       context: back/
+      target: prod
 
 volumes:
     database_data:
