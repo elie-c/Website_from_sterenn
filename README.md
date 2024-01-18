@@ -9,9 +9,17 @@ On souhaite pouvoir lui rajouter d'autres services.
 Vous trouverez ci-dessous un schéma de notre architecture "micro-service".
 
 ## Liste des services
-Serveur HTTP + Front
-Back
-BDD
+* Serveur HTTP + Front
+
+Pour le mode de fonctionnement production, nos services Angular et Nginx sont fusionnés en un seul service car nous avons fait le choix de copier notre build du frontend Angular dans notre serveur Nginx. Ainsi on gagne en performances car on évite des requêtes inutiles entre le sesrveur Nginx et Angular.
+
+Pour le mode développement par contre, les deux services sont "distincts" car le serveur Nginx communique avec le serveur Angular qui lui est lancé en mode start:dev; permettant de mettre à jour notre application dès qu'on modifie notre frontend Angularr, sans devoir tout re déployer. Pour son implémetation on utilise un proxy-pass pour rediriger les requêtes au serveur Http Nginx à notre serveur Angular. Malheureusement cela n'est pas encore fonctionnel.
+
+* Back
+
+
+
+* BDD
 
 ## Comment utiliser l'application
 1. Cloner ce projet Github sur votre machine personnelle
