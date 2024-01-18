@@ -19,12 +19,12 @@ Pour le mode de fonctionnement production, nos services Angular et Nginx sont fu
 * Back
   
 En mode production, le service backend, codé en NestJS, communique avec le frontend et la base de donnée. On utilise la commande node dist/main.js
-En mode développement, on utilise la commande npm run start:dev pour que les modifications soient prises en compte en temps réel et rebuild automatiquement le serveur et donc l'application. On utilise dans ce cas aussi un bind-mount.
+En mode développement, on utilise la commande npm run start:dev pour que les modifications soient prises en compte en temps réel et rebuild automatiquement le serveur et donc l'application. On utilise dans ce cas un bind-mount.
 
 * BDD
 
 La base de donnée, implémentée par Postgres, permet la persistance des données. Elle communique avec le backend. On sauvegarde les donnnées par l'utilisation d'un volume. 
-A ajouter : Pourquoi Postgres
+Nous avons choisi Postgres car c'est une base de données opensource, bien documentée et maintenue par la communauté et qui, de plus, est performante et sécurisée.
 ### En cours
 Nous allons détailler ici les services que nous avons essayé de fournir mais pour lesquels nous ne sommes pas parvenus au bout à cause de nombreuses erreurs que nous n'avons pas réussi à comprendre et régler. Chaque service à sa propre branche où vous pouvez aller voir notre travail. 
 
@@ -37,12 +37,12 @@ Malheureusement nous n'avons pas réussi à terminer cette fonctionnalité car n
 * Notifications
 
 Pour le système de notifications avec Quarkus, nous avons repris le projet mailer du get started de Quarkus. Nous avons ensuite inséré RabbitMQ dans notre projet back-end. Nous avons eu beaucoup d'erreurs à ce niveau là. Des dépendances n'étaient pas installées, chose que nous avons ajouté dans le Dockerfile de l'image pour le back. Nous avons ajouté du code à notre service users pour envoyer un mail à la création d'un compte. Cependant, au lancement du docker compose, nous avions cette erreur : `The attribute `queue.name` on connector 'smallrye-rabbitmq' (channel: mail) must be set`. Cependant, cette propriété était indiquée dans le fichier application.properties dans le dossier quarkus/src/main/ressources. Nous ne pouvions alors pas construire tous les containers.
-A ajouter : pourquoi RabbitMQ
+On a choisi RabbitMQ car il permet la communication asynchrone entre les composants, plutôt intéressant dans une application découplée en plusieurs micro-services, et qu'il offre une prise en charge de nombreux langages de programmation.
 
 * Load Testing
 
 Pour le load testing, nous avons voulu utilisé k6 et grafana. Cependant, même en se documentant sur grafana, nous n'avons pas réussi à le faire fonctionner avec tous les autres containers. Nous réussissions à accéder sur la page de login de grafana en lançant uniquement l'image de grafana, mais cela ne fonctionnait pas avec notre docker-compose. 
-A ajouter : pourquoi k6 et grafana
+On a choisi Grafana car il offre une visualisation puissante des métriques et des données, permettant de surveiller en temps réel nos micro-services. En parallèle, K6 est un outil de test qui permet de simuler des charges réalistes sur nos micro-services pour évaluer leur résilience.
 
 ## Comment utiliser l'application
 1. Cloner ce projet Github sur votre machine personnelle
@@ -57,4 +57,4 @@ Nous avons fait le choix de n'exposer que le serveur http Nginx sur Internet car
 
 ## Feedback sur le module Architecture Logicielle
 Pendant les cours magistraux, nous avons pu énormément développer notre culture générale. Nous avons discuté de nombreux aspects intéressants en informatique (licences open sources, micro-services, etc). 
-Cependant, il nous a manqué du temps et de la connaissance pour réussir ce projet. Même en se documentant sur les sites officielles, sur des forums avec le code de nos erreurs, nous ne sommes pas parvenus à régler nos soucis, ce qui est très frustrant. 
+Cependant, il nous a manqué du temps et de la connaissance pour réussir ce projet. Même en se documentant sur les sites officiels, sur des forums avec le code de nos erreurs, nous ne sommes pas parvenus à régler nos soucis, ce qui est très frustrant. 
