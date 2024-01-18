@@ -8,7 +8,6 @@ services:
       - database
     build: 
         context: .
-        target: prod
 
   database:
     image: postgres:latest
@@ -49,7 +48,9 @@ services:
       - RABBITMQ_NODE_PORT=5672
 
   quarkus:
-    build : quarkus/
+    build :
+      context: quarkus/
+      target: prod
     depends_on:
       - rabbitmq
     restart: always
