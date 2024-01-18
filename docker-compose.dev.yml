@@ -4,7 +4,7 @@ services:
     build:
       context: front/
     volumes: 
-      - ./front/src:/usr/src
+      - ./front/src:/app/src
     ports:
       - 4200:4200
 
@@ -17,6 +17,7 @@ services:
     build: 
         context: .
         target: dev
+    restart: always
 
   database:
     image: postgres:latest
