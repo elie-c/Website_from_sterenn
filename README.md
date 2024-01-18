@@ -36,10 +36,11 @@ Malheureusement nous n'avons pas réussi à terminer cette fonctionnalité car n
 
 * Notifications
 
-Pour le système de notifications avec Quarkus, nous avons repris le projet mailer du get started de Quarkus. Nous avons ensuite inséré RabbitMQ dans notre projet back-end. Nous avons eu beaucoup d'erreurs à ce niveau là. Des dépendances n'étaient pas installées, chose que nous avons ajouté dans le Dockerfile de l'image pour le back. Nous avons ajouté du code à notre service users pour envoyer un mail à la création d'un compte. Cependant, au lancement du docker compose, nous avions une propriété qui n'était pas set, mais qui l'était pourtant dans un fichier. Nous ne pouvions alors pas construire tous les containers.
+Pour le système de notifications avec Quarkus, nous avons repris le projet mailer du get started de Quarkus. Nous avons ensuite inséré RabbitMQ dans notre projet back-end. Nous avons eu beaucoup d'erreurs à ce niveau là. Des dépendances n'étaient pas installées, chose que nous avons ajouté dans le Dockerfile de l'image pour le back. Nous avons ajouté du code à notre service users pour envoyer un mail à la création d'un compte. Cependant, au lancement du docker compose, nous avions cette erreur : `The attribute `queue.name` on connector 'smallrye-rabbitmq' (channel: mail) must be set`. Cependant, cette propriété était indiquée dans le fichier application.properties dans le dossier quarkus/src/main/ressources. Nous ne pouvions alors pas construire tous les containers.
 A ajouter : pourquoi RabbitMQ
 
 * Load Testing
+
 Pour le load testing, nous avons voulu utilisé k6 et grafana. Cependant, même en se documentant sur grafana, nous n'avons pas réussi à le faire fonctionner avec tous les autres containers. Nous réussissions à accéder sur la page de login de grafana en lançant uniquement l'image de grafana, mais cela ne fonctionnait pas avec notre docker-compose. 
 A ajouter : pourquoi k6 et grafana
 
