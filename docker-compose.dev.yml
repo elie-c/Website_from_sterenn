@@ -1,0 +1,50 @@
+services:
+    
+  front:
+    build:
+      context: front/
+    volumes: 
+      - ./front/src:/app/src
+    ports:
+      - 4200:4200
+
+  nginx:
+    ports:
+      - 80:80
+    depends_on:
+      - back
+      - database
+    build: 
+        context: .
+        target: dev
+    restart: always
+
+  database:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=esir
+      - POSTGRES_DB=assoDeRennes
+      - POSTGRES_USER=esir
+    volumes:
+      - database_data:/var/lib/postgresql/data
+
+  back:
+    depends_on:
+      - database
+    environment:
+      - DB_HOST=database
+      - DB_USER=esir
+      - DB_PASSWORD=esir
+      - DB_DATABASE=assoDeRennes
+      - DB_PORT=5432
+    build:
+      context: back/
+      target: dev
+    volumes: 
+      - ./back/src:/app/src
+
+volumes:
+    database_data:
+    front:
