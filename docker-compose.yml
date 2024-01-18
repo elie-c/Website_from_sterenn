@@ -37,6 +37,14 @@ services:
     build:
       context: back/
       target: prod
+ 
+  grafana:
+    build:
+      context: grafana/
+    container_name: grafana
+    volumes:
+      - grafana-storage:/var/lib/grafana
 
 volumes:
     database_data:
+    grafana-storage: {}
