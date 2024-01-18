@@ -27,14 +27,13 @@ En mode développement, on utilise la commande npm run start:dev pour que les mo
 
 La base de donnée, implémentée par Postgres, permet la persistance des données. Elle communique avec le backend. On sauvegarde les donnnées par l'utilisation d'un volume. 
 Nous avons choisi Postgres car c'est une base de données opensource, bien documentée et maintenue par la communauté et qui, de plus, est performante et sécurisée.
+
+* Mode développement et production
+
+Pour le mode développement, nous avons fait un nouveau docker compose nommé `docker-compose.dev.yml` et une nouvelle configuration pour le serveur Http `nginx-dev.conf`. Dans certains Dockerfile (back et Nginx), nous avons deux images, une pour la production (AS prod) et une pour le développement (AS dev). Nous indiquons l'image à construire dans le `docker-compose.dev.yml` avec `target : dev`. Nous avons eu énormément de soucis pour le mode de développement. Nous voulions créer un bind-mount avec le front pour lier notre dossier src. Cependant, en modifiant un élément, la modification ne se réalisait pas. En demandant à des camarades, ils nous ont indiqué faire un service à part pour le front-end et en faisant la même chose, nous avions une erreur 502 en se connectant au localhost et d'autres erreurs. Le serveur nginx n'arrivait pas à rediriger vers le service front et cherchait les fichiers .html dans son dossier usr/share/nginx/html. Nous avons donc combiné les deux méthodes, mettre notre front-end dans le nginx comme pour le mode production et garder le proxy-pass. Cela fonctionne. Nous avons également utilisé le bind-mount pour pouvoir modifier le back-end. 
+
 ### En cours
 Nous allons détailler ici les services que nous avons essayé de fournir mais pour lesquels nous ne sommes pas parvenus au bout à cause de nombreuses erreurs que nous n'avons pas réussi à comprendre et régler. Chaque service à sa propre branche où vous pouvez aller voir notre travail. 
-
-* Mode développement
-
-Pour le mode développement, nous avons fait un nouveau docker compose nommé `docker-compose.dev.yml` et une nouvelle configuration pour le serveur Http `nginx-dev.conf`. Dans certains Dockerfile (back et Nginx), nous avons deux images, une pour la production (AS prod) et une pour le développement (AS dev). Nous indiquons l'image à construire dans le `docker-compose.dev.yml` avec `target : dev`. Notre front-end à son propre container; notre serveur Angular est lancé avec `npm start`. Nous souhaitions pouvoir mettre à jour notre application dès qu'on modifie notre frontend Angular, sans devoir tout re déployer. Pour son implémentation on utilise le bind-mount pour le dossier src et un proxy-pass dans la configuration de Nginx pour rediriger les requêtes sur le serveur Http à notre serveur Angular.
-Nous voulions également pouvoir modifier le code du back-end sans avoir à redéployer les containers. Nous avons aussi voulu utilisé du bind-mount.
-Malheureusement nous n'avons pas réussi à terminer cette fonctionnalité car nous avions une erreur 502 en accédant au localhost, sans savoir pourquoi et malgré nos différentes tentatives de correction.
 
 * Notifications
 
@@ -47,11 +46,19 @@ Pour le load testing, nous avons voulu utilisé k6 et grafana. Cependant, même 
 On a choisi Grafana car il offre une visualisation puissante des métriques et des données, permettant de surveiller en temps réel nos micro-services. En parallèle, K6 est un outil de test qui permet de simuler des charges réalistes sur nos micro-services pour évaluer leur résilience.
 
 ## Comment utiliser l'application
+
 1. Cloner ce projet Github sur votre machine personnelle
 2. Installer Docker : https://docs.docker.com/get-docker/
+
+* Mode production
 3. Ouvrir le projet et exécuter la commande :
 ```
 docker compose up
+```
+* Mode développement
+3. Ouvrir le projet et exécuter la commande :
+```
+docker compose -f docker-compose.dev.yml up
 ```
 
 ## Sécurité
