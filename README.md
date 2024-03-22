@@ -47,7 +47,7 @@ On a choisi Grafana car il offre une visualisation puissante des métriques et d
 
 ## Fuzzing
 
-Le fuzzing est une méthode de test consistant à envoyer des données volontairement erronées à certains endroits d'un projet (formulaire, paramètres de fonction, requête http...) et d'observer les résultats. Cela permet notamment de tester la résilience du système tout en trouvant de nouveaux bugs auxquels on aurait pas pensé. 
+Le fuzzing est une méthode de test consistant à envoyer des données aléatoires à certains endroits d'un projet (formulaire, paramètres de fonction, requête http...) et d'observer les résultats. Cela permet notamment de tester la résilience du système tout en trouvant de nouveaux bugs auxquels on aurait pas pensé. 
 
 Dans ce projet, on fait le choix de tester les fonctions TypeScript du front-end et on utilisera l'outil "Jazzer.js" pour la génération et l'automatisation de ces tests.
 
