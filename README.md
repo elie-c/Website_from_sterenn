@@ -45,6 +45,23 @@ On a choisi RabbitMQ car il permet la communication asynchrone entre les composa
 Pour le load testing, nous avons voulu utilisé k6 et grafana. Cependant, même en se documentant sur grafana, nous n'avons pas réussi à le faire fonctionner avec tous les autres containers. Nous réussissions à accéder sur la page de login de grafana en lançant uniquement l'image de grafana, mais cela ne fonctionnait pas avec notre docker-compose. 
 On a choisi Grafana car il offre une visualisation puissante des métriques et des données, permettant de surveiller en temps réel nos micro-services. En parallèle, K6 est un outil de test qui permet de simuler des charges réalistes sur nos micro-services pour évaluer leur résilience.
 
+## Fuzzing
+
+Le fuzzing est une méthode de test consistant à envoyer des données volontairement erronées à certains endroits d'un projet (formulaire, paramètres de fonction, requête http...) et d'observer les résultats. Cela permet notamment de tester la résilience du système tout en trouvant de nouveaux bugs auxquels on aurait pas pensé. 
+
+Dans ce projet, on fait le choix de tester les fonctions TypeScript du front-end et on utilisera l'outil "Jazzer.js" pour la génération et l'automatisation de ces tests.
+
+## Canary testing
+
+Le canary testing permet le déploiement d'une version mise à jour du projet à une petite proportion des utilisateurs finaux. Cela permet de tester la dernière version de notre application dans un réel environnement de production, tout en réduisant les risques car peu d'utilisateurs seront touchés. 
+
+Pour implémenter le canary testing dans notre application, nous aurons besoin de :
+- la version d'origine de l'application
+- la nouvelle version de l'application : dans notre cas on modifiera le service front uniquement
+- une redirection vers ces applications : notre serveur nginx redirige les utilisateurs soit vers l'ancienne soit ver la nouvelle application
+
+On fait le choix de rediriger 10% des utilisateurs vers la nouvelle application.
+
 ## Comment utiliser l'application
 
 1. Cloner ce projet Github sur votre machine personnelle
